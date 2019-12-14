@@ -2,4 +2,4 @@
 
 Under Construction
 
-[Image of User Input](/images/inputwindow.png)
+![Image of User Input](/images/inputwindow.png)
