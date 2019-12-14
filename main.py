@@ -12,6 +12,7 @@ SORTS = ['Bubble Sort', 'Insertion Sort', 'Merge Sort',
 
 
 
+
 '''selection sort'''
 def selection_sort(arr):
     for i in range(len(arr)):
@@ -124,7 +125,7 @@ def odd_even_sort(arr, n):
     while isSorted == 0:
         isSorted = 1
         temp = 0
-        for i in range(1, n-1, 2):
+        for i in range(1, n, 2):
             if arr[i] > arr[i+1]:
                 arr[i], arr[i+1] = arr[i+1], arr[i]
                 isSorted = 0
@@ -132,7 +133,7 @@ def odd_even_sort(arr, n):
             yield arr
 
 
-        for i in range(0, n-1, 2):
+        for i in range(0, n, 2):
             if arr[i] > arr[i+1]:
                 arr[i], arr[i+1] = arr[i+1], arr[i]
                 isSorted = 0
@@ -230,6 +231,13 @@ def draw_bars(graph, items, bar_width, bar_spacing):       # redraws bars each t
 
 
 def main():
+    dict = {
+            'Bubble Sort': bubble_sort, 'Insertion Sort': insertion_sort, 'Merge Sort': merge_sort,
+             'Odd-Even Sort': odd_even_sort, 'Binary Insertion Sort': binary_insertion_sort, 'Heap Sort': heap_sort,
+             'Quick Sort': quick_sort, 'Selection Sort': selection_sort
+        }
+
+
     sg.change_look_and_feel('Tan')
 
     GRAPH_SIZE = (800,300)
@@ -299,61 +307,27 @@ def main():
     choice1 = values[0][0] # first selection in listbox
     choice2 = values[0][1] # second selection in listbox
 
+    # match first selection
+    if choice1 in dict.keys():
+        if choice1 == 'Odd-Even Sort':
+            sort1 = dict[choice1](first_list, len(first_list)-1)
+        elif choice1 in ('Merge Sort', 'Quick Sort'):
+            sort1 = dict[choice1](first_list, 0, len(first_list)-1)
+        else:
+            sort1 = dict[choice1](first_list)
+        graph_title1 = choice1
 
-    if choice1 == 'Bubble Sort':
-        sort1 = bubble_sort(first_list)
-        graph_title1 = 'Bubble Sort'
-    elif choice1 == 'Insertion Sort':
-        sort1 = insertion_sort(first_list)
-        graph_title1 = 'Insertion Sort'
-    elif choice1 == 'Merge Sort':
-        sort1 = merge_sort(first_list, 0, len(first_list)-1)
-        graph_title1 = 'Merge Sort'
-    elif choice1 == 'Odd-Even Sort':
-        sort1 = odd_even_sort(first_list, len(first_list))
-        graph_title1 = 'Odd-Even Sort'
-    elif choice1 == 'Heap Sort':
-        sort1 = heap_sort(first_list)
-        graph_title1 = 'Heap Sort'
-    elif choice1 == 'Binary Insertion Sort':
-        sort1 = binary_insertion_sort(first_list)
-        graph_title1 = 'Binary Insertion Sort'
-    elif choice1 == 'Quick Sort':
-        sort1 = quick_sort(first_list, 0, len(first_list)-1)
-        graph_title1 = 'Quick Sort'
-    elif choice1 == 'Selection Sort':
-        sort1 = selection_sort(first_list)
-        graph_title1 = 'Selection Sort'
-    else:
-        return
+    # match second selection
+    if choice2 in dict.keys():
+        if choice2 == 'Odd-Even Sort':
+            sort2 = dict[choice2](second_list, len(second_list)-1)
+        elif choice2 in ('Merge Sort', 'Quick Sort'):
+            sort2 = dict[choice2](second_list, 0, len(second_list)-1)
+        else:
+            sort2 = dict[choice2](second_list)
+        graph_title2 = choice2
 
 
-    if choice2 == 'Bubble Sort':
-        sort2 = bubble_sort(second_list)
-        graph_title2 = 'Bubble Sort'
-    elif choice2 == 'Insertion Sort':
-        sort2 = insertion_sort(second_list)
-        graph_title2 = 'Insertion Sort'
-    elif choice2 == 'Merge Sort':
-        sort2 = merge_sort(second_list, 0, len(second_list)-1)
-        graph_title2 = 'Merge Sort'
-    elif choice2 == 'Odd-Even Sort':
-        sort2 = odd_even_sort(second_list, len(second_list))
-        graph_title2 = 'Odd-Even Sort'
-    elif choice2 == 'Heap Sort':
-        sort2 = heap_sort(second_list)
-        graph_title2 = 'Heap Sort'
-    elif choice2 == 'Binary Insertion Sort':
-        sort2 = binary_insertion_sort(second_list)
-        graph_title2 = 'Binary Insertion Sort'
-    elif choice2 == 'Quick Sort':
-        sort2 = quick_sort(second_list, 0, len(second_list)-1)
-        graph_title2 = 'Quick Sort'
-    elif choice2 == 'Selection Sort':
-        sort2 = selection_sort(second_list)
-        graph_title2 = 'Selection Sort'
-    else:
-        return
 
     start_button = sg.Button("Start", size= (5, 1))
     graph1 = sg.Graph(GRAPH_SIZE, (0,0), DATA_SIZE)
