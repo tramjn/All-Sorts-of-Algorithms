@@ -8,23 +8,8 @@ BAR_SPACING, EDGE_OFFSET = 11, 3
 
 SORTS = ['Bubble Sort', 'Insertion Sort', 'Merge Sort',
  'Odd-Even Sort', 'Binary Insertion Sort', 'Heap Sort',
- 'Quick Sort', 'Selection Sort']
+ 'Quick Sort']
 
-
-
-
-'''selection sort'''
-def selection_sort(arr):
-    for i in range(len(arr)):
-
-        min_idx = i
-        for j in range(i+1, len(arr)):
-            if arr[min_idx] > arr[j]:
-                min_idx = j
-            yield arr
-        #swap
-        arr[i], arr[min_idx] = arr[min_idx], arr[i]
-        yield arr
 
 '''insertion sort'''
 def insertion_sort(arr):
@@ -231,26 +216,29 @@ def draw_bars(graph, items, bar_width, bar_spacing):       # redraws bars each t
 
 
 def main():
+
+    # color theme
+    sg.change_look_and_feel('Tan')
+
+
+    # dictionary with sorting algorithm names as keys and their functions as values
     dict = {
             'Bubble Sort': bubble_sort, 'Insertion Sort': insertion_sort, 'Merge Sort': merge_sort,
              'Odd-Even Sort': odd_even_sort, 'Binary Insertion Sort': binary_insertion_sort, 'Heap Sort': heap_sort,
-             'Quick Sort': quick_sort, 'Selection Sort': selection_sort
+             'Quick Sort': quick_sort
         }
 
-
-    sg.change_look_and_feel('Tan')
-
+    # graph size
     GRAPH_SIZE = (800,300)
     DATA_SIZE = (800, 350)
 
-
-
+    # graph titles to be renamed later
     graph_title1 = ''
     graph_title2 = ''
 
 
-
     # Layout for first window
+    # consists of text, text input, listbox enabled for multiple selection, and group of radio buttons
     input_layout = [[sg.Text('How many elements are we sorting? (Recommended <190)', justification='left', font=("Helvetica", 15))],
         [sg.Input(size=(10, 1), justification='right', font=("Helvetica", 15), key='-INPUT-')],
             [sg.Text('Choose a sort (Please pick 2)', font=("Helvetica", 15))],
@@ -260,6 +248,7 @@ def main():
            sg.Radio('Random Uneven', group_id='radio', key='-R3-', font=("Helvetica", 12))],
           [sg.Ok()],]
 
+    # create the window
     window1 = sg.Window('Choose sort', input_layout)
     button, values = window1()
     window1.close()
@@ -273,7 +262,7 @@ def main():
     radio_input2 = bool(values['-R2-'])
     radio_input3 = bool(values['-R3-'])
 
-
+    # make the graph size bigger if number of elements to sort is large
     if number_input > 150:
         GRAPH_SIZE = (1100,300)
 
@@ -332,6 +321,7 @@ def main():
     start_button = sg.Button("Start", size= (5, 1))
     graph1 = sg.Graph(GRAPH_SIZE, (0,0), DATA_SIZE)
     graph2 = sg.Graph(GRAPH_SIZE, (0,0), DATA_SIZE)
+
 
     # layout of sorting window
     layout = [[start_button], [sg.T('', size=(10,1))], [sg.T(graph_title1, size=(20, 1), justification='left', font=("Helvetica", 20))], [graph1], [sg.T('', size=(10,1))],
